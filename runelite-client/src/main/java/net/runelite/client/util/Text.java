@@ -24,6 +24,8 @@
  */
 package net.runelite.client.util;
 
+import java.awt.Color;
+
 /**
  * A set of utilities to use when dealing with text.
  */
@@ -62,4 +64,11 @@ public class Text
 		return builder.toString();
 	}
 
+	/**
+	 * Converts a given color to it's hexidecimal equivalent.
+	 */
+	public static String toHexColor(Color color)
+	{
+		return "#" + Integer.toHexString(color.getRGB()).substring(2);
+	}
 }

@@ -54,7 +54,7 @@ import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.components.ThinProgressBar;
 import net.runelite.client.util.StackFormatter;
-import net.runelite.client.util.SwingUtil;
+import net.runelite.client.util.Text;
 
 @Slf4j
 public class GrandExchangeOfferSlot extends JPanel
@@ -263,12 +263,12 @@ public class GrandExchangeOfferSlot extends JPanel
 
 	private String htmlTooltip(String value)
 	{
-		return "<html><body style = 'color:" + SwingUtil.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>Progress: <span style = 'color:white'>" + value + "</span></body></html>";
+		return "<html><body style = 'color:" + Text.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>Progress: <span style = 'color:white'>" + value + "</span></body></html>";
 	}
 
 	private String htmlLabel(String key, String value)
 	{
-		return "<html><body style = 'color:white'>" + key + "<span style = 'color:" + SwingUtil.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>" + value + "</span></body></html>";
+		return "<html><body style = 'color:white'>" + key + "<span style = 'color:" + Text.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>" + value + "</span></body></html>";
 	}
 
 	private void switchPanel()

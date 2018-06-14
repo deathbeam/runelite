@@ -29,7 +29,6 @@ package net.runelite.client.plugins.interfacestyles;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Provides;
 import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -49,6 +48,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.util.Images;
 
 @Slf4j
 @PluginDescriptor(
@@ -186,7 +186,7 @@ public class InterfaceStylesPlugin extends Plugin
 		{
 			log.debug("Loading: " + filePath);
 			BufferedImage spriteImage = ImageIO.read(inputStream);
-			return getImageSpritePixels(spriteImage);
+			return Images.getImageSpritePixels(client, spriteImage);
 		}
 		catch (IOException ex)
 		{
@@ -194,23 +194,6 @@ public class InterfaceStylesPlugin extends Plugin
 		}
 
 		return null;
-	}
-
-	private SpritePixels getImageSpritePixels(BufferedImage image)
-	{
-		int[] pixels = new int[image.getWidth() * image.getHeight()];
-
-		try
-		{
-			new PixelGrabber(image, 0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth())
-				.grabPixels();
-		}
-		catch (InterruptedException ex)
-		{
-			log.debug("PixelGrabber was interrupted: ", ex);
-		}
-
-		return client.createSpritePixels(pixels, image.getWidth(), image.getHeight());
 	}
 
 	private void adjustWidgetDimensions()
@@ -293,7 +276,7 @@ public class InterfaceStylesPlugin extends Plugin
 
 		if (compassImage != null)
 		{
-			SpritePixels compass = getImageSpritePixels(compassImage);
+			SpritePixels compass = Images.getImageSpritePixels(client, compassImage);
 			client.setCompass(compass);
 		}
 	}

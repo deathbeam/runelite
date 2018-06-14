@@ -83,7 +83,7 @@ import net.runelite.client.ui.DynamicGridLayout;
 import net.runelite.client.ui.PluginPanel;
 import net.runelite.client.ui.components.ComboBoxListRenderer;
 import net.runelite.client.ui.components.IconTextField;
-import net.runelite.client.util.SwingUtil;
+import net.runelite.client.util.Images;
 
 @Slf4j
 public class ConfigPanel extends PluginPanel
@@ -104,7 +104,7 @@ public class ConfigPanel extends PluginPanel
 			{
 				BufferedImage configIcon = ImageIO.read(ConfigPanel.class.getResourceAsStream("config_edit_icon.png"));
 				CONFIG_ICON = new ImageIcon(configIcon);
-				CONFIG_ICON_HOVER = new ImageIcon(SwingUtil.grayscaleOffset(configIcon, -100));
+				CONFIG_ICON_HOVER = new ImageIcon(Images.grayscaleOffset(configIcon, -100));
 				ON_SWITCHER = new ImageIcon(ImageIO.read(ConfigPanel.class.getResourceAsStream("switchers/on.png")));
 				OFF_SWITCHER = new ImageIcon(ImageIO.read(ConfigPanel.class.getResourceAsStream("switchers/off.png")));
 				SEARCH = new ImageIcon(ImageIO.read(IconTextField.class.getResourceAsStream("search.png")));

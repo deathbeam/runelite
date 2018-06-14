@@ -52,7 +52,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
-import net.runelite.client.util.SwingUtil;
+import net.runelite.client.util.Images;
 
 @Singleton
 public class KourendLibraryPanel extends PluginPanel
@@ -73,7 +73,7 @@ public class KourendLibraryPanel extends PluginPanel
 			{
 				BufferedImage resetIcon = ImageIO.read(KourendLibraryPanel.class.getResourceAsStream("reset.png"));
 				RESET_ICON = new ImageIcon(resetIcon);
-				RESET_CLICK_ICON = new ImageIcon(SwingUtil.grayscaleOffset(resetIcon, -100));
+				RESET_CLICK_ICON = new ImageIcon(Images.grayscaleOffset(resetIcon, -100));
 			}
 		}
 		catch (IOException e)

@@ -49,7 +49,7 @@ import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.components.ProgressBar;
 import net.runelite.client.util.LinkBrowser;
 import net.runelite.client.util.StackFormatter;
-import net.runelite.client.util.SwingUtil;
+import net.runelite.client.util.Text;
 
 @Slf4j
 class XpInfoBox extends JPanel
@@ -202,7 +202,7 @@ class XpInfoBox extends JPanel
 	{
 		String valueStr = StackFormatter.quantityToRSDecimalStack(value);
 
-		return "<html><body style = 'color:" + SwingUtil.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>" + key + "<span style = 'color:white'>" + valueStr + "</span></body></html>";
+		return "<html><body style = 'color:" + Text.toHexColor(ColorScheme.LIGHT_GRAY_COLOR) + "'>" + key + "<span style = 'color:white'>" + valueStr + "</span></body></html>";
 	}
 
 }
