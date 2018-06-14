@@ -1329,14 +1329,15 @@ public interface Client extends GameEngine
 	void setChangedSkillsCount(int i);
 
 	/**
-	 * Sets a mapping of sprites to override.
+	 * Gets a mapping of sprites to override.
 	 * <p>
 	 * The key value in the map corresponds to the ID of the sprite,
 	 * and the value the sprite to replace it with.
+	 * Update this map in order to update the overrides.
 	 *
-	 * @param overrides the sprites to override
+	 * @return mapping
 	 */
-	void setSpriteOverrides(Map<Integer, SpritePixels> overrides);
+	Map<Integer, SpritePixels> getSpriteOverrides();
 
 	/**
 	 * Sets a mapping of widget sprites to override.

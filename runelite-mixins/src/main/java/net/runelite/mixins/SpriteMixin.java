@@ -25,6 +25,7 @@
  */
 package net.runelite.mixins;
 
+import java.util.HashMap;
 import java.util.Map;
 import net.runelite.api.SpritePixels;
 import net.runelite.api.mixins.Copy;
@@ -39,17 +40,16 @@ import net.runelite.rs.api.RSSpritePixels;
 public abstract class SpriteMixin implements RSClient
 {
 	@Inject
-	private static Map<Integer, SpritePixels> spriteOverrides;
+	private static Map<Integer, SpritePixels> spriteOverrides = new HashMap<Integer, SpritePixels>();
 
 	@Inject
 	private static Map<Integer, SpritePixels> widgetSpriteOverrides;
 
 	@Inject
 	@Override
-	public void setSpriteOverrides(Map<Integer, SpritePixels> overrides)
+	public Map<Integer, SpritePixels> getSpriteOverrides()
 	{
-		getWidgetSpriteCache().reset();
-		spriteOverrides = overrides;
+		return spriteOverrides;
 	}
 
 	@Inject
