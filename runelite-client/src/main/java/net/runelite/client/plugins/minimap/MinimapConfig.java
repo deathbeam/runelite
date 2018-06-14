@@ -104,4 +104,14 @@ public interface MinimapConfig extends Config
 	{
 		return false;
 	}
+
+	@ConfigItem(
+		keyName = "expandMinimap",
+		name = "Expand minimap",
+		description = "Expand minimap to large version (Resizable only)"
+	)
+	default boolean expandMinimap()
+	{
+		return false;
+	}
 }

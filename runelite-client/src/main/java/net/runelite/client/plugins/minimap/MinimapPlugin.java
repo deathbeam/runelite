@@ -28,6 +28,7 @@ import com.google.common.eventbus.Subscribe;
 import com.google.inject.Provides;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Objects;
 import javax.inject.Inject;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -37,9 +38,11 @@ import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.WidgetHiddenChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.util.Images;
 
 @PluginDescriptor(
 	name = "Minimap"
@@ -50,6 +53,9 @@ public class MinimapPlugin extends Plugin
 
 	@Inject
 	private Client client;
+
+	@Inject
+	private ClientThread clientThread;
 
 	@Inject
 	private MinimapConfig config;
@@ -74,6 +80,7 @@ public class MinimapPlugin extends Plugin
 
 		storeOriginalDots();
 		replaceMapDots();
+		updateMinimapSprite(config.expandMinimap());
 	}
 
 	@Override
@@ -87,10 +94,11 @@ public class MinimapPlugin extends Plugin
 		}
 
 		restoreOriginalDots();
+		updateMinimapSprite(false);
 	}
 
 	@Subscribe
-	public void onGameStateChange(GameStateChanged event)
+	public void onGameStateChanged(GameStateChanged event)
 	{
 		if (event.getGameState() == GameState.LOGIN_SCREEN && originalDotSprites == null)
 		{
@@ -151,14 +159,20 @@ public class MinimapPlugin extends Plugin
 			{
 				minimapWidget.setHidden(config.hideMinimap());
 			}
+
 			return;
+		}
+
+		if (event.getKey().equals("expandMinimap"))
+		{
+			updateMinimapSprite(config.expandMinimap());
 		}
 
 		replaceMapDots();
 	}
 
 	@Subscribe
-	public void onWidgetHiddenChange(WidgetHiddenChanged event)
+	public void onWidgetHiddenChanged(WidgetHiddenChanged event)
 	{
 		Widget minimapWidget = client.getWidget(WidgetInfo.MINIMAP_WIDGET);
 
@@ -166,6 +180,23 @@ public class MinimapPlugin extends Plugin
 		{
 			minimapWidget.setHidden(config.hideMinimap());
 		}
+	}
+
+	private void updateMinimapSprite(boolean add)
+	{
+		clientThread.invokeLater(() ->
+		{
+			if (add)
+			{
+				client.getSpriteOverrides().put(1178,
+					Objects.requireNonNull(Images
+						.getImageSpritePixels(client, Images.getImage(MinimapPlugin.class, "1178.png"))));
+			}
+			else
+			{
+				client.getSpriteOverrides().remove(1178);
+			}
+		});
 	}
 
 	private void replaceMapDots()
