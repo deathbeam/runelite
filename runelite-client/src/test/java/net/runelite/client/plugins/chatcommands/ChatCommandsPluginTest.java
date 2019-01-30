@@ -133,7 +133,7 @@ public class ChatCommandsPluginTest
 	@Test
 	public void testPersonalBest()
 	{
-		final String FIGHT_DURATION = "Fight duration: <col=ff0000>2:06</col>. Personal best: 1:19.";
+		final String FIGHT_DURATION = "Fight duration: <col=ff0000>2:06</col>. Personal best: 1:19";
 
 		when(client.getUsername()).thenReturn("Adam");
 
