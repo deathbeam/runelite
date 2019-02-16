@@ -259,6 +259,7 @@ under the License.
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
         <checkstyle.skip>false</checkstyle.skip>
+        <dockerfile.skip>false</dockerfile.skip>
       </properties>
     </profile>
   </profiles>

@@ -38,6 +38,7 @@
 	<properties>
 		<spring.boot.version>1.5.6.RELEASE</spring.boot.version>
 		<mapstruct.version>1.2.0.Final</mapstruct.version>
+		<dockerfile.skip>true</dockerfile.skip>
 	</properties>
 
 	<dependencies>
@@ -185,6 +186,36 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<executions>
+					<execution>
+						<id>docker-install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<skip>${dockerfile.skip}</skip>
+					<repository>runelite/${project.artifactId}</repository>
+					<googleContainerRegistryEnabled>false</googleContainerRegistryEnabled>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.war</JAR_FILE>
+					</buildArgs>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
