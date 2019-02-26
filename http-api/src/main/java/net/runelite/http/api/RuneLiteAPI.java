@@ -102,7 +102,8 @@ public class RuneLiteAPI
 
 	public static HttpUrl getApiBase()
 	{
-		return HttpUrl.parse(BASE + "/runelite-" + getVersion());
+//		return HttpUrl.parse(BASE + "/runelite-" + getVersion());
+		return HttpUrl.parse("http://localhost:9080");
 	}
 
 	public static HttpUrl getStaticBase()
@@ -112,7 +113,8 @@ public class RuneLiteAPI
 
 	public static HttpUrl getWsEndpoint()
 	{
-		return HttpUrl.parse(WSBASE);
+//		return HttpUrl.parse(WSBASE);
+		return HttpUrl.parse("http://localhost:9081");
 	}
 
 	public static String getVersion()
