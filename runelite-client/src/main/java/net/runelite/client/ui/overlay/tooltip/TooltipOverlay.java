@@ -87,9 +87,9 @@ public class TooltipOverlay extends Overlay
 		final Rectangle clientCanvasBounds = new Rectangle(client.getRealDimensions());
 		final net.runelite.api.Point mouseCanvasPosition = client.getMouseCanvasPosition();
 		final int offset = runeLiteConfig.tooltipPosition() == TooltipPositionType.UNDER_CURSOR ? UNDER_OFFSET : ABOVE_OFFSET;
-		final Point mousePosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset);
+		final Point tooltipPosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset);
 		final Rectangle bounds = new Rectangle(getBounds());
-		bounds.setLocation(mousePosition);
+		bounds.setLocation(tooltipPosition);
 
 		if (!clientCanvasBounds.contains(bounds))
 		{
@@ -109,7 +109,8 @@ public class TooltipOverlay extends Overlay
 			}
 		}
 
-		final Rectangle newBounds = new Rectangle(-1, -1, 0, 0);
+		final Rectangle newBounds = new Rectangle(mouseCanvasPosition.getX(), mouseCanvasPosition.getY(), 0, 0);
+		int count = 0;
 
 		for (Tooltip tooltip : tooltips)
 		{
@@ -117,17 +118,16 @@ public class TooltipOverlay extends Overlay
 			tooltipComponent.setModIcons(client.getModIcons());
 			tooltipComponent.setText(tooltip.getText());
 
-			if (newBounds.contains(mousePosition))
+			if (count++ > 0)
 			{
-				mousePosition.move(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset + newBounds.height);
+				// move tooltip to account for previously drawn tooltips
+				tooltipPosition.move(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset + newBounds.height);
 			}
 
-			tooltipComponent.setPosition(mousePosition);
+			tooltipComponent.setPosition(tooltipPosition);
 			final Dimension dimension = tooltipComponent.render(graphics);
 
 			// Create incremental tooltip newBounds
-			newBounds.x = newBounds.x != -1 ? Math.min(newBounds.x, mousePosition.x) : mousePosition.x;
-			newBounds.y = newBounds.y != -1 ? Math.min(newBounds.y, mousePosition.y) : mousePosition.y;
 			newBounds.height += dimension.height + PADDING;
 			newBounds.width = Math.max(newBounds.width, dimension.width);
 		}
