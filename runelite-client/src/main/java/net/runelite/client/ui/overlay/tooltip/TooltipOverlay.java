@@ -87,9 +87,9 @@ public class TooltipOverlay extends Overlay
 		final Rectangle clientCanvasBounds = new Rectangle(client.getRealDimensions());
 		final net.runelite.api.Point mouseCanvasPosition = client.getMouseCanvasPosition();
 		final int offset = runeLiteConfig.tooltipPosition() == TooltipPositionType.UNDER_CURSOR ? UNDER_OFFSET : ABOVE_OFFSET;
-		final Point mousePosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY());
+		final Point mousePosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset);
 		final Rectangle bounds = new Rectangle(getBounds());
-		bounds.setLocation(new Point(mousePosition.x, mousePosition.y + offset));
+		bounds.setLocation(mousePosition);
 
 		if (!clientCanvasBounds.contains(bounds))
 		{
@@ -116,7 +116,7 @@ public class TooltipOverlay extends Overlay
 			final TooltipComponent tooltipComponent = new TooltipComponent();
 			tooltipComponent.setModIcons(client.getModIcons());
 			tooltipComponent.setText(tooltip.getText());
-			tooltipComponent.setPosition(new Point(mousePosition.x, mousePosition.y + newBounds.height + offset));
+			tooltipComponent.setPosition(new Point(mousePosition.x, mousePosition.y + newBounds.height));
 
 			final Dimension dimension = tooltipComponent.render(graphics);
 
