@@ -87,9 +87,9 @@ public class TooltipOverlay extends Overlay
 		final Rectangle clientCanvasBounds = new Rectangle(client.getRealDimensions());
 		final net.runelite.api.Point mouseCanvasPosition = client.getMouseCanvasPosition();
 		final int offset = runeLiteConfig.tooltipPosition() == TooltipPositionType.UNDER_CURSOR ? UNDER_OFFSET : ABOVE_OFFSET;
-		final Point tooltipPosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset);
+		final Point mousePosition = new Point(mouseCanvasPosition.getX(), mouseCanvasPosition.getY());
 		final Rectangle bounds = new Rectangle(getBounds());
-		bounds.setLocation(tooltipPosition);
+		bounds.setLocation(new Point(mousePosition.x, mousePosition.y + offset));
 
 		if (!clientCanvasBounds.contains(bounds))
 		{
@@ -110,21 +110,14 @@ public class TooltipOverlay extends Overlay
 		}
 
 		final Rectangle newBounds = new Rectangle(mouseCanvasPosition.getX(), mouseCanvasPosition.getY(), 0, 0);
-		int count = 0;
 
 		for (Tooltip tooltip : tooltips)
 		{
 			final TooltipComponent tooltipComponent = new TooltipComponent();
 			tooltipComponent.setModIcons(client.getModIcons());
 			tooltipComponent.setText(tooltip.getText());
+			tooltipComponent.setPosition(new Point(mousePosition.x, mousePosition.y + newBounds.height + offset));
 
-			if (count++ > 0)
-			{
-				// move tooltip to account for previously drawn tooltips
-				tooltipPosition.move(mouseCanvasPosition.getX(), mouseCanvasPosition.getY() + offset + newBounds.height);
-			}
-
-			tooltipComponent.setPosition(tooltipPosition);
 			final Dimension dimension = tooltipComponent.render(graphics);
 
 			// Create incremental tooltip newBounds
