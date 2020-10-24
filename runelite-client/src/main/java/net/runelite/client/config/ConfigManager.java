@@ -343,10 +343,21 @@ public class ConfigManager
 
 		File tempFile = new File(parent, RuneLite.DEFAULT_CONFIG_FILE.getName() + ".tmp");
 
+		final Properties propsToStore = new Properties();
+		properties.forEach((key, value) -> {
+			final String propKey = (String) key;
+			final String propVal = (String) value;
+
+			// Only store properties with value
+			if (!Strings.isNullOrEmpty(propVal)) {
+				propsToStore.setProperty(propKey, propVal);
+			}
+		});
+
 		try (FileOutputStream out = new FileOutputStream(tempFile))
 		{
 			out.getChannel().lock();
-			properties.store(new OutputStreamWriter(out, StandardCharsets.UTF_8), "RuneLite configuration");
+			propsToStore.store(new OutputStreamWriter(out, StandardCharsets.UTF_8), "RuneLite configuration");
 			// FileOutputStream.close() closes the associated channel, which frees the lock
 		}
 
